@@ -1,22 +1,36 @@
 import React, {useState} from 'react';
 import './App.css';
+import {BanknotType, MoneyComponent} from "./MoneyComponent";
+
+export type FilterValuesType = 'All' | 'Dollar' | 'RUBLE'
 
 function App() {
+    const [money, setMoney] = useState<BanknotType[]>([
+        {banknots: 'Dollars', value: 100, number: ' a1234567890'},
+        {banknots: 'Dollars', value: 50, number: ' z1234567890'},
+        {banknots: 'RUBLS', value: 100, number: ' w1234567890'},
+        {banknots: 'Dollars', value: 100, number: ' e1234567890'},
+        {banknots: 'Dollars', value: 50, number: ' c1234567890'},
+        {banknots: 'RUBLS', value: 100, number: ' r1234567890'},
+        {banknots: 'Dollars', value: 50, number: ' x1234567890'},
+        {banknots: 'RUBLS', value: 50, number: ' v1234567890'},
+    ])
 
-    let [a, setA] = useState<number>(1)
-    const onClickHandler = () => {
-        setA(++a)
+    const [filter, setFilter] = useState<FilterValuesType>('All')
+
+    let currentMoney = money
+    if (filter === 'RUBLE') {
+        currentMoney = money.filter(el => el.banknots === 'RUBLS')
+    }
+    if (filter === 'Dollar') {
+        currentMoney = money.filter(el => el.banknots === 'Dollars')
+    }
+    const onClickFilterHandler = (filter: FilterValuesType) => {
+        setFilter(filter)
     }
 
-    const onClickResetHandler = () => {
-        setA(0)
-    }
     return (
-        <div className="App">
-            <h1>{a}</h1>
-            <button onClick={onClickHandler}>number</button>
-            <button onClick={onClickResetHandler}>0</button>
-        </div>
+        <MoneyComponent currentMoney={currentMoney} onClickFilterHandler={onClickFilterHandler}/>
     )
         ;
 }
@@ -100,6 +114,29 @@ function App() {
 //             <Button name="MyYouTubeChanel-1" callBack={() => Button1Foo('I am Vasya!', 21, 'live in Minsk')}/>
 //             <Button name="MyYouTubeChanel-2" callBack={() => Button2Foo('I am Ivan!')}/>
 //             <Button name="stupid BUTTON" callBack={Button3Foo}/>
+//         </div>
+//     )
+//         ;
+// }
+
+
+// Microtask 4
+//
+// function App() {
+//
+//     let [a, setA] = useState<number>(1)
+//     const onClickHandler = () => {
+//         setA(++a)
+//     }
+//
+//     const onClickResetHandler = () => {
+//         setA(0)
+//     }
+//     return (
+//         <div className="App">
+//             <h1>{a}</h1>
+//             <button onClick={onClickHandler}>number</button>
+//             <button onClick={onClickResetHandler}>0</button>
 //         </div>
 //     )
 //         ;
