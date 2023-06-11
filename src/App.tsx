@@ -1,36 +1,46 @@
 import React, {useState} from 'react';
 import './App.css';
-import {BanknotType, MoneyComponent} from "./MoneyComponent";
+import {FullInput} from "./components/universal/FullInput";
+import {Input} from "./components/universal/Input";
+import {SuperButton} from "./components/universal/SuperButton";
 
 export type FilterValuesType = 'All' | 'Dollar' | 'RUBLE'
 
 function App() {
-    const [money, setMoney] = useState<BanknotType[]>([
-        {banknots: 'Dollars', value: 100, number: ' a1234567890'},
-        {banknots: 'Dollars', value: 50, number: ' z1234567890'},
-        {banknots: 'RUBLS', value: 100, number: ' w1234567890'},
-        {banknots: 'Dollars', value: 100, number: ' e1234567890'},
-        {banknots: 'Dollars', value: 50, number: ' c1234567890'},
-        {banknots: 'RUBLS', value: 100, number: ' r1234567890'},
-        {banknots: 'Dollars', value: 50, number: ' x1234567890'},
-        {banknots: 'RUBLS', value: 50, number: ' v1234567890'},
+    let [message, setMessage] = useState([
+        {message: 'message1'},
+        {message: 'message2'},
+        {message: 'message3'}
     ])
 
-    const [filter, setFilter] = useState<FilterValuesType>('All')
+    const [title, setTitle] = useState('')
 
-    let currentMoney = money
-    if (filter === 'RUBLE') {
-        currentMoney = money.filter(el => el.banknots === 'RUBLS')
+    const addMessage = (title: string) => {
+        const newMessage = {message: title}
+        setMessage([newMessage, ...message])
     }
-    if (filter === 'Dollar') {
-        currentMoney = money.filter(el => el.banknots === 'Dollars')
-    }
-    const onClickFilterHandler = (filter: FilterValuesType) => {
-        setFilter(filter)
+
+
+    const addMessageHandler = () => {
+        addMessage(title)
+        setTitle('')
     }
 
     return (
-        <MoneyComponent currentMoney={currentMoney} onClickFilterHandler={onClickFilterHandler}/>
+        <div className="App">
+            {/*<div>*/}
+            {/*    <input/>*/}
+            {/*    <button>+</button>*/}
+            {/*</div>*/}
+            {/*<FullInput addMessage={addMessage}/>*/}
+            <Input value={title} setTitle={setTitle}/>
+            <SuperButton name='+' callBack={addMessageHandler}/>
+            {message.map((m, index) => {
+                return (
+                    <div key={index}>{m.message}</div>
+                )
+            })}
+        </div>
     )
         ;
 }
@@ -141,3 +151,40 @@ function App() {
 //     )
 //         ;
 // }
+
+
+// Microtask 5
+// export type FilterValuesType = 'All' | 'Dollar' | 'RUBLE'
+//
+// function App() {
+//     const [money, setMoney] = useState<BanknotType[]>([
+//         {banknots: 'Dollars', value: 100, number: ' a1234567890'},
+//         {banknots: 'Dollars', value: 50, number: ' z1234567890'},
+//         {banknots: 'RUBLS', value: 100, number: ' w1234567890'},
+//         {banknots: 'Dollars', value: 100, number: ' e1234567890'},
+//         {banknots: 'Dollars', value: 50, number: ' c1234567890'},
+//         {banknots: 'RUBLS', value: 100, number: ' r1234567890'},
+//         {banknots: 'Dollars', value: 50, number: ' x1234567890'},
+//         {banknots: 'RUBLS', value: 50, number: ' v1234567890'},
+//     ])
+//
+//     const [filter, setFilter] = useState<FilterValuesType>('All')
+//
+//     let currentMoney = money
+//     if (filter === 'RUBLE') {
+//         currentMoney = money.filter(el => el.banknots === 'RUBLS')
+//     }
+//     if (filter === 'Dollar') {
+//         currentMoney = money.filter(el => el.banknots === 'Dollars')
+//     }
+//     const onClickFilterHandler = (filter: FilterValuesType) => {
+//         setFilter(filter)
+//     }
+//
+//     return (
+//         <MoneyComponent currentMoney={currentMoney} onClickFilterHandler={onClickFilterHandler}/>
+//     )
+//         ;
+// }
+//
+// export default App;
